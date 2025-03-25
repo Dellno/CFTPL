@@ -1,0 +1,1 @@
+double math_parse(char *math_string[], double mem[], size_t math_str_len);
