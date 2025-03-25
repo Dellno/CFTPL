@@ -317,6 +317,10 @@ int main(int argc, char *argv[])
             }
             memory[cpcursor] = program[program_cursor][1+d][cpcursor-memory_cursor];
         }
+        else if ((!strcmp(program[program_cursor][0], "СТРОКА")) || (!strcmp(program[program_cursor][1], "СТРОКА")))
+        {
+            exit(0);
+        }
 
         else if ((!strcmp(program[program_cursor][0], "ВВОДСТРОКИ")) || (!strcmp(program[program_cursor][1], "ВВОДСТРОКИ")))
         {
