@@ -5,16 +5,12 @@
 double math_parse(char *math_string[], double mem[], size_t math_str_len)
 {
     OBJ *math_stack = NULL;
-    /* for (size_t i = 0; i < math_str_len; i++)
-    {
-        printf("%s", math_string[i]);
-    } */
     for (size_t i = 0; i < math_str_len; i++)
     {
         double res;
         if (math_stack != NULL)
         {
-            char subs[1] = {math_string[i][0]};
+            char subs[2] = {math_string[i][0], 0};
             char* isnum = strstr("0123456789", subs);
             if (isnum)
             {

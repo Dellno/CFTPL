@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#define true 1
-#define false 0
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -85,13 +84,7 @@ int main(int argc, char *argv[])
     while ((fgets(buf, 8192, file)) != NULL)
     {
         pre_program = (char **)realloc(pre_program, string_count * sizeof(char *));
-        int i = 0;
-        do
-        {
-            i += 1;
-        } while (buf[i] != '\n');
-        buf[i] = '\0';
-        buf[i + 1] = (char)0;
+        buf[strcspn(buf, "\r\n")] = 0;
         int length = strlen(buf);
         pre_program[string_count - 1] = (char *)malloc(length + 1);
         strcpy(pre_program[string_count - 1], buf);
@@ -276,22 +269,15 @@ int main(int argc, char *argv[])
             int d = !strcmp(program[program_cursor][1], "ВЫВОД");
             if (!strcmp(program[program_cursor][1+d], "СИМВОЛЫ"))
             {
-                int str_len = 0;
-                while ((char)memory[memory_cursor + str_len] != '\0')
+                for (int i = 0; memory[memory_cursor + i]; i++)
                 {
-                    str_len++;
+                    putchar(memory[memory_cursor + i]);
                 }
-                char* buf = (char*)malloc(str_len);
-                for (int i = 0; i < str_len; i++)
-                {
-                    buf[i] = memory[memory_cursor+i];
-                }
-                printf("%s", buf);    
             }
             else if (!strcmp(program[program_cursor][1+d], "ЦЕЛ"))
             {
                 double arg = memory[memory_cursor];
-                printf("%d\n", (int)arg); 
+                printf("%0.f\n", arg); 
             }
 
             else 
