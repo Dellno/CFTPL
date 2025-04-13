@@ -95,6 +95,16 @@ double math_parse(char *math_string[], double mem[], size_t math_str_len)
                         res = (b < a);
                     }
 
+                    else if (!strcmp(math_string[i], ">="))
+                    {
+                        res = (b >= a);
+                    }
+
+                    else if (!strcmp(math_string[i], "<="))
+                    {
+                        res = (b <= a);
+                    }
+
                     else if (!strcmp(math_string[i], "ИЛИ"))
                     {
                         res = (b || a);

@@ -50,7 +50,7 @@ const int buffersize = 4092;
 double memory[512];
 int memory_cursor = 0;
 int attachments_count = 0;
-int main(int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
     setlocale(LC_CTYPE, "ru_RU.UTF-8");
     if (argc == 1)
@@ -59,10 +59,10 @@ int main(int argc, char *argv[])
         return 1;
     }
     if (argc == 3)
-    {   
+    {
         if (!strcmp(argv[3], "--memory"))
         {
-        double* memory = malloc(sizeof(double)* atoi(argv[4]));
+            double *memory = malloc(sizeof(double) * atoi(argv[4]));
         }
     }
     else
@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
                 commad = (char **)realloc(commad, (arg_count + 1) * sizeof(char *));
                 buf[arg_len] = '\0';
                 int length = strlen(buf);
-                
+
                 commad[arg_count] = (char *)malloc(length + 1);
                 strcpy(commad[arg_count], buf);
                 // для инструкций с строчными аргументами
@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
         }
         program[i] = commad;
     }
-    
+
     // собственно сама интерпретация.
     for (int program_cursor = 0; program_cursor < string_count - 1; program_cursor++)
     {
@@ -175,17 +175,17 @@ int main(int argc, char *argv[])
         {
             int d = !strcmp(program[program_cursor][1], "КУРСОР");
             int ln = 0;
-            while (strcmp(program[program_cursor][1+ln+d], "КЦ"))
+            while (strcmp(program[program_cursor][1 + ln + d], "КЦ"))
             {
                 ln++;
             }
             char **funargs;
-            funargs = (char**)malloc(ln*sizeof(char*));
+            funargs = (char **)malloc(ln * sizeof(char *));
             for (int i = 0; i < ln; i++)
             {
-                int length = strlen(program[program_cursor][1+i+d]);
-                funargs[i] = (char*)malloc(length + 1);
-                strcpy(funargs[i], program[program_cursor][1+i+d]);
+                int length = strlen(program[program_cursor][1 + i + d]);
+                funargs[i] = (char *)malloc(length + 1);
+                strcpy(funargs[i], program[program_cursor][1 + i + d]);
             }
             double arg = math_parse(funargs, memory, ln);
             memory_cursor = (int)arg;
@@ -195,22 +195,22 @@ int main(int argc, char *argv[])
             }
             free(funargs);
         }
-        // СЧЁТ 
+        // СЧЁТ
         else if ((!strcmp(program[program_cursor][0], "СЧЁТ")) || (!strcmp(program[program_cursor][1], "СЧЁТ")))
         {
             int d = !strcmp(program[program_cursor][1], "СЧЁТ");
             int ln = 0;
-            while (strcmp(program[program_cursor][1+ln+d], "КЦ"))
+            while (strcmp(program[program_cursor][1 + ln + d], "КЦ"))
             {
                 ln++;
             }
             char **funargs;
-            funargs = (char**)malloc(ln*sizeof(char*));
+            funargs = (char **)malloc(ln * sizeof(char *));
             for (int i = 0; i < ln; i++)
             {
-                int length = strlen(program[program_cursor][1+i+d]);
-                funargs[i] = (char*)malloc(length + 1);
-                strcpy(funargs[i], program[program_cursor][1+i+d]);
+                int length = strlen(program[program_cursor][1 + i + d]);
+                funargs[i] = (char *)malloc(length + 1);
+                strcpy(funargs[i], program[program_cursor][1 + i + d]);
             }
             double arg = math_parse(funargs, memory, ln);
             memory[memory_cursor] = arg;
@@ -225,20 +225,20 @@ int main(int argc, char *argv[])
         {
             int d = !strcmp(program[program_cursor][1], "ЕСЛИ");
             int ln = 0;
-            while (strcmp(program[program_cursor][1+ln+d], "КЦ"))
+            while (strcmp(program[program_cursor][1 + ln + d], "КЦ"))
             {
                 ln++;
             }
             char **funargs;
-            funargs = (char**)malloc(ln*sizeof(char*));
+            funargs = (char **)malloc(ln * sizeof(char *));
             for (int i = 0; i < ln; i++)
             {
-                int length = strlen(program[program_cursor][1+i+d]);
-                funargs[i] = (char*)malloc(length + 1);
-                strcpy(funargs[i], program[program_cursor][1+i+d]);
+                int length = strlen(program[program_cursor][1 + i + d]);
+                funargs[i] = (char *)malloc(length + 1);
+                strcpy(funargs[i], program[program_cursor][1 + i + d]);
             }
             double arg = math_parse(funargs, memory, ln);
-            
+
             if (arg)
             {
                 attachments_count++;
@@ -261,29 +261,29 @@ int main(int argc, char *argv[])
         else if ((!strcmp(program[program_cursor][0], "ПЕРЕЙТИК")) || (!strcmp(program[program_cursor][1], "ПЕРЕЙТИК")))
         {
             int d = !strcmp(program[program_cursor][1], "ПЕРЕЙТИК");
-            program_cursor = get_value(point_dict, program[program_cursor][1+d]);
+            program_cursor = get_value(point_dict, program[program_cursor][1 + d]);
         }
         // ВЫВОД
         else if ((!strcmp(program[program_cursor][0], "ВЫВОД")) || (!strcmp(program[program_cursor][1], "ВЫВОД")))
         {
             int d = !strcmp(program[program_cursor][1], "ВЫВОД");
-            if (!strcmp(program[program_cursor][1+d], "СИМВОЛЫ"))
+            if (!strcmp(program[program_cursor][1 + d], "СИМВОЛЫ"))
             {
                 for (int i = 0; memory[memory_cursor + i]; i++)
                 {
                     putchar(memory[memory_cursor + i]);
                 }
             }
-            else if (!strcmp(program[program_cursor][1+d], "ЦЕЛ"))
+            else if (!strcmp(program[program_cursor][1 + d], "ЦЕЛ"))
             {
                 double arg = memory[memory_cursor];
-                printf("%0.f\n", arg); 
+                printf("%0.f\n", arg);
             }
 
-            else 
+            else
             {
-            double arg = memory[memory_cursor];
-            printf("%lf\n", arg); 
+                double arg = memory[memory_cursor];
+                printf("%lf\n", arg);
             }
         }
         // ЦЕЛ (отбросить дробную часть)
@@ -296,12 +296,12 @@ int main(int argc, char *argv[])
         {
             int d = !strcmp(program[program_cursor][1], "СТРОКА");
             int cpcursor = memory_cursor;
-            while (program[program_cursor][1+d][cpcursor-memory_cursor] != '\0')
+            while (program[program_cursor][1 + d][cpcursor - memory_cursor] != '\0')
             {
-                memory[cpcursor] = program[program_cursor][1+d][cpcursor-memory_cursor];
+                memory[cpcursor] = program[program_cursor][1 + d][cpcursor - memory_cursor];
                 cpcursor += 1;
             }
-            memory[cpcursor] = program[program_cursor][1+d][cpcursor-memory_cursor];
+            memory[cpcursor] = program[program_cursor][1 + d][cpcursor - memory_cursor];
         }
         else if ((!strcmp(program[program_cursor][0], "СТРОКА")) || (!strcmp(program[program_cursor][1], "СТРОКА")))
         {
@@ -313,18 +313,18 @@ int main(int argc, char *argv[])
             int d = !strcmp(program[program_cursor][1], "ВВОДСТРОКИ");
             int cpcursor = memory_cursor;
             int input_buf_len = 128;
-            if (strcmp(program[program_cursor][1+d], "КЦ"))
+            if (strcmp(program[program_cursor][1 + d], "КЦ"))
             {
-                input_buf_len = atoi(program[program_cursor][1+d]);
+                input_buf_len = atoi(program[program_cursor][1 + d]);
             }
-            char* input_buf = (char*)malloc(sizeof(char) * input_buf_len);
+            char *input_buf = (char *)malloc(sizeof(char) * input_buf_len);
             fgets(input_buf, input_buf_len, stdin);
-            while (input_buf[cpcursor-memory_cursor] != '\0')
+            while (input_buf[cpcursor - memory_cursor] != '\0')
             {
-                memory[cpcursor] = input_buf[cpcursor-memory_cursor];
+                memory[cpcursor] = input_buf[cpcursor - memory_cursor];
                 cpcursor += 1;
             }
-            memory[cpcursor] = input_buf[cpcursor-memory_cursor];
+            memory[cpcursor] = input_buf[cpcursor - memory_cursor];
         }
     }
 
